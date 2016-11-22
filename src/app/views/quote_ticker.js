@@ -8,6 +8,11 @@ const QuoteTicker = Backbone.View.extend({
 
     const templateString = Backbone.$('#tmpl-quote-ticker').html();
     this.template = _.template(templateString);
+  },
+
+  render: function() {
+    this.$el.html(this.template({symbol: "SUPER", price: 87.30}));
+    return this;
   }
 });
 
