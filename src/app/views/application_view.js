@@ -4,7 +4,6 @@ import QuoteTicker from 'app/views/quote_ticker';
 
 const ApplicationView = Backbone.View.extend({
   initialize: function() {
-    this.tickers = [];
     this.render();
   },
 
@@ -34,21 +33,20 @@ const ApplicationView = Backbone.View.extend({
       model: tickerData
     });
 
-    this.tickers.push(quoteTicker);
     quoteTicker.render();
   },
 
   onClickBuy: function(e) {
     // Buy all of the stocks, increasing their price
-    this.tickers.forEach(function(ticker) {
-      ticker.trigger("price-change", +1.00);
+    this.model.get("quotes").forEach(function(quote) {
+      quote.buy();
     });
   },
 
   onClickSell: function(e) {
     // Sell all of the stocks, decreasing their price
-    this.tickers.forEach(function(ticker) {
-      ticker.trigger("price-change", -1.00);
+    this.model.get("quotes").forEach(function(quote) {
+      quote.sell();
     });
   }
 });

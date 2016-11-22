@@ -27,6 +27,14 @@ const Quote = Backbone.Model.extend({
 
   priceChange: function(price) {
     this.set("price", this.get("price") + price);
+  },
+
+  buy: function() {
+    this.priceChange(+1.00);
+  },
+
+  sell: function() {
+    this.priceChange(-1.00);
   }
 });
 
