@@ -11,7 +11,22 @@ const QuoteTicker = Backbone.View.extend({
 
     // Setup an event handler for when we receive a "price-change" event
     this.on("price-change", this.onPriceChange);
-    this.trigger("price-change", +100.00); // Everyone's richer!
+
+    var self = this;
+    setInterval(function() {
+      // Calculate a random price movement
+      const maxChange = 1.00;
+      const minChange = 0.00;
+      var change = _.random(minChange * 10, maxChange * 10) / 10;
+
+      // Decide if the change is positive or negative
+      if(_.random(0,1) === 1) {
+        change *= -1;
+      }
+
+      // Actually trigger the change
+      self.trigger("price-change", change);
+    }, 1000);
   },
 
   render: function() {
