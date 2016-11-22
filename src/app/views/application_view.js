@@ -8,6 +8,14 @@ const ApplicationView = Backbone.View.extend({
   },
 
   render: function() {
+    this.renderTicker({
+      symbol: "SUPER",
+      price: 87.30
+    });
+    return this;
+  },
+
+  renderTicker: function(tickerData) {
     // Create a new place for this quote ticker
     // to be attached
     const tickerContainer = Backbone.$('<div>');
@@ -16,14 +24,9 @@ const ApplicationView = Backbone.View.extend({
 
     const quoteTicker = new QuoteTicker({
       el: tickerContainer,
-      model: {
-        symbol: "SUPER",
-        price: 87.30
-      }
+      model: tickerData
     });
     quoteTicker.render();
-
-    return this;
   }
 });
 
