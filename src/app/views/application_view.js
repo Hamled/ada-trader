@@ -12,6 +12,11 @@ const ApplicationView = Backbone.View.extend({
       symbol: "SUPER",
       price: 87.30
     });
+    this.renderTicker({
+      symbol: "MIDDLE",
+      price: 77.10
+    });
+
     return this;
   },
 
