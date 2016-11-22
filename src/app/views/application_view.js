@@ -8,6 +8,10 @@ const ApplicationView = Backbone.View.extend({
     this.render();
   },
 
+  events: {
+    'click .btn-buy': 'onClickBuy'
+  },
+
   render: function() {
     this.renderTicker({
       symbol: "SUPER",
@@ -35,6 +39,13 @@ const ApplicationView = Backbone.View.extend({
 
     this.tickers.push(quoteTicker);
     quoteTicker.render();
+  },
+
+  onClickBuy: function(e) {
+    // Buy all of the stocks, increasing their price
+    this.tickers.forEach(function(ticker) {
+      ticker.trigger("price-change", +1.00);
+    });
   }
 });
 
