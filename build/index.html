@@ -6,6 +6,13 @@
   </head>
   <body>
     <div id="mount"></div>
+
+    <script type="text/template" id="tmpl-quote-ticker">
+      <div class="quote-ticker">
+        <p class="symbol"><%= symbol %></p>
+        <p class="price"><%= price.toFixed(2) %></p>
+      </div>
+    </script>
     <script src="/app.bundle.js" charset="utf-8"></script>
   </body>
 </html>
