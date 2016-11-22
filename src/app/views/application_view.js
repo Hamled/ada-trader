@@ -4,6 +4,7 @@ import QuoteTicker from 'app/views/quote_ticker';
 
 const ApplicationView = Backbone.View.extend({
   initialize: function() {
+    this.tickers = [];
     this.render();
   },
 
@@ -31,6 +32,8 @@ const ApplicationView = Backbone.View.extend({
       el: tickerContainer,
       model: tickerData
     });
+
+    this.tickers.push(quoteTicker);
     quoteTicker.render();
   }
 });
