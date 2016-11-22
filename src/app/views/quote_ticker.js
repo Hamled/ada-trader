@@ -12,6 +12,11 @@ const QuoteTicker = Backbone.View.extend({
     this.listenTo(this.model, "change", this.onQuoteChange);
   },
 
+  events: {
+    'click .btn-buy': 'onClickBuy',
+    'click .btn-sell': 'onClickSell'
+  },
+
   render: function() {
     this.$el.html(this.template(this.model.attributes));
     return this;
@@ -19,6 +24,14 @@ const QuoteTicker = Backbone.View.extend({
 
   onQuoteChange: function() {
     this.render();
+  },
+
+  onClickBuy: function(e) {
+    this.model.buy();
+  },
+
+  onClickSell: function(e) {
+    this.model.sell();
   }
 });
 
