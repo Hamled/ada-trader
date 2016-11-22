@@ -30,12 +30,12 @@ const QuoteTicker = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template(this.model));
+    this.$el.html(this.template(this.model.attributes));
     return this;
   },
 
   onPriceChange: function(price) {
-    this.model.price += price;
+    this.model.priceChange(price);
     this.render();
   }
 });
