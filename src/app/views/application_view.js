@@ -8,7 +8,11 @@ const ApplicationView = Backbone.View.extend({
 
   render: function() {
     const quoteTicker = new QuoteTicker({
-      el: this.$el
+      el: this.$el,
+      model: {
+        symbol: "SUPER",
+        price: 87.30
+      }
     });
     quoteTicker.render();
 
