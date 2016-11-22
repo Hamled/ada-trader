@@ -15,7 +15,7 @@ const ApplicationView = Backbone.View.extend({
 
   render: function() {
     var self = this;
-    this.model.quotes.forEach(function(quote) {
+    this.model.get("quotes").forEach(function(quote) {
       self.renderTicker(quote);
     });
 
