@@ -9,7 +9,8 @@ const ApplicationView = Backbone.View.extend({
   },
 
   events: {
-    'click .btn-buy': 'onClickBuy'
+    'click .btn-buy': 'onClickBuy',
+    'click .btn-sell': 'onClickSell'
   },
 
   render: function() {
@@ -45,6 +46,13 @@ const ApplicationView = Backbone.View.extend({
     // Buy all of the stocks, increasing their price
     this.tickers.forEach(function(ticker) {
       ticker.trigger("price-change", +1.00);
+    });
+  },
+
+  onClickSell: function(e) {
+    // Sell all of the stocks, decreasing their price
+    this.tickers.forEach(function(ticker) {
+      ticker.trigger("price-change", -1.00);
     });
   }
 });
