@@ -6,9 +6,11 @@ import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 
 import QuoteListView from 'views/quote_list_view';
 import TradeHistoryView from 'views/trade_history_view';
+import OrderListView from 'views/order_list_view';
 
 const quoteData = [
   {
@@ -45,6 +47,15 @@ $(document).ready(function() {
     quotes: quotes,
     tradeTemplate: _.template($('#trade-template').html()),
   });
+
+  const ordersView = new OrderListView({
+    model: new OrderList(),
+    el: $('#order-workspace'),
+    quotes: quotes,
+    orderTemplate: _.template($('#order-template').html()),
+  });
+
+  ordersView.render();
 
   const simulator = new Simulator({
     quotes: quotes,
