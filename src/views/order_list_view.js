@@ -49,28 +49,23 @@ const OrderListView = Backbone.View.extend({
   onBuyOrder(e) {
     e.preventDefault();
 
-    const form = this._formData();
-    const quote = this.quotes.findWhere({ symbol: form.symbol });
-
-    this.model.add({
-      quote,
-      symbol: form.symbol,
-      targetPrice: form.targetPrice,
-      buy: true,
-    });
+    this._createOrder(this._formData(), true);
   },
 
   onSellOrder(e) {
     e.preventDefault();
 
-    const form = this._formData();
+    this._createOrder(this._formData(), false);
+  },
+
+  _createOrder(form, buy) {
     const quote = this.quotes.findWhere({ symbol: form.symbol });
 
     this.model.add({
       quote,
       symbol: form.symbol,
       targetPrice: form.targetPrice,
-      buy: false,
+      buy,
     });
   },
 
