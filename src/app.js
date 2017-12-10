@@ -8,6 +8,7 @@ import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 
 import QuoteListView from 'views/quote_list_view';
+import TradeHistoryView from 'views/trade_history_view';
 
 const quoteData = [
   {
@@ -38,6 +39,12 @@ $(document).ready(function() {
   });
 
   quotesView.render();
+
+  const tradeHistory = new TradeHistoryView({
+    el: $('#trades'),
+    quotes: quotes,
+    tradeTemplate: _.template($('#trade-template').html()),
+  });
 
   const simulator = new Simulator({
     quotes: quotes,
