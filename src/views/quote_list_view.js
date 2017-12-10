@@ -2,10 +2,6 @@ import Backbone from 'backbone';
 import QuoteView from 'views/quote_view';
 
 const QuoteListView = Backbone.View.extend({
-  initialize(params) {
-    this.quoteTemplate = params.quoteTemplate;
-  },
-
   render() {
     this.$el.empty();
 
@@ -14,7 +10,6 @@ const QuoteListView = Backbone.View.extend({
         model: quote,
         tagName: 'li',
         className: 'quote',
-        template: this.quoteTemplate,
       });
 
       this.$el.append(quoteView.render().$el);
