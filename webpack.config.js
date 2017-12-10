@@ -43,6 +43,15 @@ module.exports = {
           'file-loader',
         ],
       },
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'underscore-template-loader',
+          query: {
+            engine: 'underscore',
+          },
+        },
+      },
     ],
   },
 };
