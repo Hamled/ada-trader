@@ -1,12 +1,9 @@
 import Backbone from 'backbone';
+import template from 'templates/order.html';
 
 const OrderView = Backbone.View.extend({
-  initialize(params) {
-    this.template = params.template;
-  },
-
   render() {
-    this.$el.html(this.template(this.model.attributes));
+    this.$el.html(template(this.model.attributes));
 
     return this;
   },

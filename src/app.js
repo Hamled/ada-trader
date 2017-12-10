@@ -49,7 +49,6 @@ $(document).ready(function() {
     model: new OrderList(),
     el: $('#order-workspace'),
     quotes: quotes,
-    orderTemplate: _.template($('#order-template').html()),
   });
 
   ordersView.render();

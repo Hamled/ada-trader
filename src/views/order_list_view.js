@@ -5,7 +5,6 @@ import Order from 'models/order';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.quotes = params.quotes;
-    this.orderTemplate = params.orderTemplate;
 
     this.listenTo(this.model, 'update', this.render);
 
@@ -33,7 +32,6 @@ const OrderListView = Backbone.View.extend({
         model: order,
         tagName: 'li',
         className: 'order',
-        template: this.orderTemplate,
       });
 
       $orderList.append(orderView.render().$el);
