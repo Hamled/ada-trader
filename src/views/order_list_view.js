@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import OrderView from 'views/order_view';
+import Order from 'models/order';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
@@ -61,11 +62,25 @@ const OrderListView = Backbone.View.extend({
   _createOrder(form, buy) {
     const quote = this.quotes.findWhere({ symbol: form.symbol });
 
-    this.model.add({
+    const order = new Order({
       quote,
       targetPrice: form.targetPrice,
       buy,
     });
+
+    const $errors = this.$('.form-errors');
+    $errors.empty();
+
+    if(!order.isValid()) {
+      order.validationError.forEach((error) => {
+        $errors.append(`<h3>${error}</h3>`);
+      });
+
+      order.destroy();
+      return;
+    }
+
+    this.model.add(order);
   },
 
   _formData() {

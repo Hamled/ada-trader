@@ -18,6 +18,37 @@ const Order = Backbone.Model.extend({
     this.listenTo(this.get('quote'), 'change:price', this.execute);
   },
 
+  validate(attributes, options) {
+    const quote = attributes.quote;
+    if(!quote) {
+      return ['Invalid stock'];
+    }
+
+    const errors = [];
+
+    const symbol = attributes.symbol;
+    if(!symbol || typeof symbol !== 'string' || symbol !== quote.get('symbol')) {
+      errors.push('Invalid stock symbol');
+    }
+
+    const targetPrice = attributes.targetPrice;
+    if(!targetPrice || Number.isNaN(targetPrice) || targetPrice <= 0.00) {
+      errors.push('Invalid target price');
+    }
+
+    const quotePrice = quote.get('price');
+    const buy = attributes.buy;
+    if(buy && targetPrice > quotePrice) {
+      errors.push('Price higher than market price!');
+    }
+
+    if(!buy && targetPrice < quotePrice) {
+      errors.push('Price lower than market price!');
+    }
+
+    return errors.length > 0 ? errors : false;
+  },
+
   execute(quote) {
     const buy = this.get('buy');
     const quotePrice = quote.get('price');
