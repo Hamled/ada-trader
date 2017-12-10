@@ -1,14 +1,13 @@
 import Backbone from 'backbone';
+import template from 'templates/trade.html';
 
 const TradeHistoryView = Backbone.View.extend({
   initialize(params) {
-    this.tradeTemplate = params.tradeTemplate;
-
     this.listenTo(params.quotes, 'trade', this.onTrade);
   },
 
   onTrade(trade) {
-    this.$el.prepend(this.tradeTemplate(trade));
+    this.$el.prepend(template(trade));
   },
 
   // No render function in this view,

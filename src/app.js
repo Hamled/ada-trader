@@ -43,7 +43,6 @@ $(document).ready(function() {
   const tradeHistory = new TradeHistoryView({
     el: $('#trades'),
     quotes: quotes,
-    tradeTemplate: _.template($('#trade-template').html()),
   });
 
   const ordersView = new OrderListView({
