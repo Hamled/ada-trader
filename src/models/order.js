@@ -11,6 +11,10 @@ const Order = Backbone.Model.extend({
   initialize(attributes, options) {
     // TODO: throw an error if quote attribute is not given
 
+    if(attributes.quote) {
+      this.set('symbol', attributes.quote.get('symbol'));
+    }
+
     this.listenTo(this.get('quote'), 'change:price', this.execute);
   },
 

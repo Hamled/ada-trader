@@ -63,7 +63,6 @@ const OrderListView = Backbone.View.extend({
 
     this.model.add({
       quote,
-      symbol: form.symbol,
       targetPrice: form.targetPrice,
       buy,
     });
