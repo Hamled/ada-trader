@@ -17,6 +17,15 @@ describe('Quote spec', () => {
 
       expect(quote.get('price')).toEqual(startPrice + 1.00);
     });
+
+    it('fires the trade event', () => {
+      const tradeHandler = jasmine.createSpy();
+      quote.on('trade', tradeHandler);
+
+      quote.buy();
+
+      expect(tradeHandler).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('Sell function', () => {
@@ -26,6 +35,15 @@ describe('Quote spec', () => {
       quote.sell();
 
       expect(quote.get('price')).toEqual(startPrice - 1.00);
+    });
+
+    it('fires the trade event', () => {
+      const tradeHandler = jasmine.createSpy();
+      quote.on('trade', tradeHandler);
+
+      quote.sell();
+
+      expect(tradeHandler).toHaveBeenCalledTimes(1);
     });
   });
 });
