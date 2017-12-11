@@ -85,4 +85,82 @@ describe('Order spec', () => {
       expect(sellOrder.isValid()).toEqual(false);
     });
   });
+
+  describe('automatic order execution', () => {
+    let handlers;
+
+    beforeEach(() => {
+      handlers = jasmine.createSpyObj('handlers', ['trade', 'buyDestroy', 'sellDestroy']);
+
+      quote.on('trade', handlers.trade);
+      buyOrder.on('destroy', handlers.buyDestroy);
+      sellOrder.on('destroy', handlers.sellDestroy);
+    });
+
+    it('executes BUY order and destroys it when market price matches target price', () => {
+      quote.set('price', buyOrder.get('targetPrice'));
+
+      expect(handlers.trade).toHaveBeenCalled();
+      expect(handlers.buyDestroy).toHaveBeenCalled();
+      expect(handlers.sellDestroy).not.toHaveBeenCalled();
+    });
+
+    it('executes BUY order and destroys it when market price is better than target price', () => {
+      quote.set('price', buyOrder.get('targetPrice') - 1.00);
+
+      expect(handlers.trade).toHaveBeenCalled();
+      expect(handlers.buyDestroy).toHaveBeenCalled();
+      expect(handlers.sellDestroy).not.toHaveBeenCalled();
+    });
+
+    it('does NOT execute BUY order and destroys it when market price is worse than target price', () => {
+      quote.set('price', buyOrder.get('targetPrice') + 1.00);
+
+      expect(handlers.trade).not.toHaveBeenCalled();
+      expect(handlers.buyDestroy).not.toHaveBeenCalled();
+      expect(handlers.sellDestroy).not.toHaveBeenCalled();
+    });
+
+    it('executes SELL order and destroys it when market price matches target price', () => {
+      quote.set('price', sellOrder.get('targetPrice'));
+
+      expect(handlers.trade).toHaveBeenCalled();
+      expect(handlers.sellDestroy).toHaveBeenCalled();
+      expect(handlers.buyDestroy).not.toHaveBeenCalled();
+    });
+
+    it('executes SELL order and destroys it when market price is better than target price', () => {
+      quote.set('price', sellOrder.get('targetPrice') + 1.00);
+
+      expect(handlers.trade).toHaveBeenCalled();
+      expect(handlers.sellDestroy).toHaveBeenCalled();
+      expect(handlers.buyDestroy).not.toHaveBeenCalled();
+    });
+
+    it('does NOT execute SELL order and destroys it when market price is worse than target price', () => {
+      quote.set('price', sellOrder.get('targetPrice') - 1.00);
+
+      expect(handlers.trade).not.toHaveBeenCalled();
+      expect(handlers.buyDestroy).not.toHaveBeenCalled();
+      expect(handlers.sellDestroy).not.toHaveBeenCalled();
+    });
+
+    it('does NOT execute BUY orders more than once', () => {
+      quote.set('price', buyOrder.get('targetPrice'));
+      quote.set('price', buyOrder.get('targetPrice'));
+
+      expect(handlers.trade).toHaveBeenCalledTimes(1);
+      expect(handlers.buyDestroy).toHaveBeenCalledTimes(1);
+      expect(handlers.sellDestroy).not.toHaveBeenCalled();
+    });
+
+    it('does NOT execute SELL orders more than once', () => {
+      quote.set('price', sellOrder.get('targetPrice'));
+      quote.set('price', sellOrder.get('targetPrice'));
+
+      expect(handlers.trade).toHaveBeenCalledTimes(1);
+      expect(handlers.sellDestroy).toHaveBeenCalledTimes(1);
+      expect(handlers.buyDestroy).not.toHaveBeenCalled();
+    });
+  });
 });
