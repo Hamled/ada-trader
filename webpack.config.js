@@ -18,7 +18,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist'], { exclude: ['index.html'] }),
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin()
   ],
 
   module: {
